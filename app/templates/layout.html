@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Блог</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&amp;subset=cyrillic-ext" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styles/main.css">
+</head>
+<body>
+    <nav class="navbar is-link" role="navigation" aria-label="main navigation">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="{{ url_for('index') }}">
+                    <img src="../static/test_logo.png">
+                </a>
+            
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="navbarBasicExample" class="navbar-menu">
+            {% if not current_user.is_anonymous %}
+                <div class="navbar-start">
+                    <a  href="{{ url_for('explore') }}" class="navbar-item">
+                        Новости
+                    </a>
+                
+                    <a href="{{ url_for('user', username=current_user.username) }}" class="navbar-item">
+                        Профиль
+                    </a>
+                
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                        Еще
+                        </a>
+
+                        <div class="navbar-dropdown">
+                        {% if user == current_user %}
+                        <a href="{{ url_for('edit_profile') }}"  class="navbar-item">
+                            Изменить профиль
+                        </a>
+                        {% endif %}
+
+                        <a class="navbar-item">
+                            Jobs
+                        </a>
+                        <a class="navbar-item">
+                            Contact
+                        </a>
+                        <hr class="navbar-divider">
+                        <a class="navbar-item">
+                            Report an issue
+                        </a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            
+                <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                    {% if current_user.is_anonymous %}
+                    <a href="{{ url_for('register') }}" class="button is-primary">
+                        <strong>Sign up</strong>
+                    </a>
+                    <a href="{{ url_for('login') }}" class="button is-light">
+                            Log in
+                        </a>
+                    {% else %}
+                    <a href="{{ url_for('logout') }}" class="button is-link is-outlined is-inverted">
+                        Выйти
+                    </a>
+                    {% endif %}
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% block body %}{% endblock %}
+    
+        {% block content %} {% endblock %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+
+            {% for message in messages %}
+            <div class="notification is-primary">
+                <button class="delete"></button>
+                {{ message }}
+            </div>
+            {% endfor %}
+
+        {% endif %}
+        {% endwith %}
+    </div>
+    {% block scripts %}
+        <script src="../static/scripts/main.js"></script>
+        {{ moment.include_jquery() }}
+        {{ moment.include_moment() }}
+        {{ moment.lang('ru') }}
+    {% endblock %}
+</body>
+</html>

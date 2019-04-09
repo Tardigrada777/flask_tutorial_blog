@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block body %}
+    <h1 class="title is-2">{{ title }} of {{ current_user.username }}</h1>
+    <div class="container">
+        {% if form %}
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="field">
+                <div class="control">
+                    {% for error in form.post.errors %}
+                    <span class="message is-danger">
+                        <div class="message-body">
+                        {{ error }}
+                        </div>
+                    </span>
+                    {% endfor %}
+
+                    {{ form.post.label }}
+                    {{ form.post(class="textarea is-info") }}
+                </div>
+            </div>
+            <p>{{ form.submit(class="button is-link") }}</p>
+        </form>
+        {% endif %}
+        <br>
+
+        {% for post in posts %}
+            {% include 'sub_templates/_post.html' %}
+        {% endfor %}
+        <div class="field is-grouped">
+            {% if prev_url %}
+            <p class="control">
+                <a href="{{ prev_url }}" class="button is-link">
+                    Новые посты
+                </a>
+            </p>
+            {% endif %}
+            {% if next_url %}
+            <p class="control">
+                <a href="{{ next_url }}" class="button is-warning">
+                Старые посты
+                </a>
+            </p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

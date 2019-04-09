@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <br>
+    <div>
+        <figure class="image is-128x128">
+            <img src="{{ user.avatar(128) }}">
+          </figure>
+        <h1 class="title">{{ user.username }}</h1>
+        <div>
+            {% if user.about_me %}
+            <span> {{ user.about_me }} </span>
+            {% endif %}
+            {% if user.last_seen %}
+            <p><strong> Был в сети: {{ moment(user.last_seen).format('LLL') }} </strong></p>
+            {% endif %}
+            <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
+
+            {% if not current_user.is_following(user) %}
+            <p><a href="{{ url_for('follow', username=user.username) }}">Follow</a></p>
+            {% else %}
+            <p><a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a></p>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    {% for post in posts %}
+        {% include 'sub_templates/_post.html' %}
+    {% endfor %}
+    <div class="field is-grouped">
+        {% if prev_url %}
+        <p class="control">
+            <a href="{{ prev_url }}" class="button is-link">
+                Новые посты
+            </a>
+        </p>
+        {% endif %}
+        {% if next_url %}
+        <p class="control">
+            <a href="{{ next_url }}" class="button is-warning">
+            Старые посты
+            </a>
+        </p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+__pycache__
+.vscode
+venv
+
+logs/*.log
+logs/*.log.*
+
+app/logs/*.log
+
+app.db
+*.pyc

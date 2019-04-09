@@ -1,0 +1,22 @@
+/* Сброс стилей настроек логотипа */
+.navbar-item img{
+    width: 60px;
+    max-height: 50px;
+}
+
+.navbar-item{
+    font-size: 14px;
+}
+
+.c-title{
+    font-size: 21px;
+}
+
+.c-title.type-logo{
+    color: white;
+    position: relative;
+    font-family: 'Motserrat', sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: uppercase;
+}

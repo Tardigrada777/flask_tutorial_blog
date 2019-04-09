@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="title has-text-centered">Sign In</h1>
+    <div class="columns is-mobile is-centered">
+        <form class="column is-one-third is-half" action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="field">
+                <div class="control">
+                    {% for error in form.username.errors %}
+                    <span class="message is-danger">
+                        <div class="message-body">
+                        {{ error }}
+                        </div>
+                    </span>
+                    {% endfor %}
+
+                    {{ form.username.label }}
+                    {{ form.username(size=32, class="input is-info") }}
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    {% for error in form.username.errors %}
+                    <span class="message is-danger">
+                        <div class="message-body">
+                        {{ error }}
+                        </div>
+                    </span>
+                    {% endfor %}
+
+                    {{ form.password.label }}
+                    {{ form.password(size=32, class="input is-info") }}
+                </div>
+            </div>
+            <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p><br>
+            <p>{{ form.submit(class="button is-link") }}</p>
+            <p>
+                <a href="{{ url_for('reset_password_request') }}">Забыли пароль?</a> 
+            </p>
+            <br>
+        </form>
+    </div>
+</div>
+{% endblock %}
